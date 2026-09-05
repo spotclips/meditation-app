@@ -1,6 +1,22 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/types/*": ["./src/types/*"],
+      "@/engine/*": ["./src/engine/*"],
+      "@/audio/*": ["./src/audio/*"],
+      "@/content/*": ["./src/content/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/storage/*": ["./src/storage/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/components/*": ["./src/components/*"]
+    },
+    "ignoreDeprecations": "6.0"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

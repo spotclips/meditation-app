@@ -16,9 +16,7 @@ import morningFocus from './morning-focus';
 import sleepMeditation from './sleep';
 import deepMindfulness from './deep-mindfulness';
 
-// ---------------------------------------------------------------------------
 // Registry
-// ---------------------------------------------------------------------------
 
 /** All available meditations, ordered for library display. */
 export const MEDITATIONS: Meditation[] = [
@@ -29,9 +27,7 @@ export const MEDITATIONS: Meditation[] = [
   deepMindfulness,
 ];
 
-// ---------------------------------------------------------------------------
 // Lookup Helpers
-// ---------------------------------------------------------------------------
 
 /** Find a meditation by its id. */
 export function getMeditation(id: string): Meditation | undefined {

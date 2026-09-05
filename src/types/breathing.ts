@@ -5,16 +5,12 @@
  * Patterns are configurable and reusable across meditations.
  */
 
-// ---------------------------------------------------------------------------
 // Breathing Phase
-// ---------------------------------------------------------------------------
 
 /** The four possible phases of a breathing cycle. */
 export type BreathingPhase = 'inhale' | 'hold' | 'exhale' | 'rest';
 
-// ---------------------------------------------------------------------------
 // Breathing Pattern (content definition)
-// ---------------------------------------------------------------------------
 
 /**
  * A configurable breathing pattern.
@@ -52,9 +48,7 @@ export interface BreathingPattern {
   cycles: number;
 }
 
-// ---------------------------------------------------------------------------
 // Breathing State (runtime state exposed by the engine)
-// ---------------------------------------------------------------------------
 
 /**
  * The current state of the breathing engine, consumed by the UI.

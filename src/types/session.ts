@@ -8,9 +8,7 @@
 
 import type { BreathingState } from './breathing';
 
-// ---------------------------------------------------------------------------
 // Session Configuration
-// ---------------------------------------------------------------------------
 
 /** How the session ends. */
 export type EndingType = 'silent' | 'bell';
@@ -58,9 +56,7 @@ export const DEFAULT_SESSION_CONFIG: SessionConfiguration = {
   breathingPatternId: null,
 };
 
-// ---------------------------------------------------------------------------
 // Session Status
-// ---------------------------------------------------------------------------
 
 /** Lifecycle status of a meditation session. */
 export type SessionStatus =
@@ -72,9 +68,7 @@ export type SessionStatus =
   | 'completed'     // Session finished normally
   | 'cancelled';    // User stopped early
 
-// ---------------------------------------------------------------------------
 // Session State (runtime)
-// ---------------------------------------------------------------------------
 
 /**
  * The complete runtime state of a meditation session.

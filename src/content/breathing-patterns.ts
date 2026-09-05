@@ -7,9 +7,7 @@
 
 import type { BreathingPattern } from '../types/breathing';
 
-// ---------------------------------------------------------------------------
 // Pattern Definitions
-// ---------------------------------------------------------------------------
 
 export const BOX_BREATHING: BreathingPattern = {
   id: 'box-breathing',
@@ -91,9 +89,7 @@ export const ENERGIZING_BREATH: BreathingPattern = {
   cycles: 12,
 };
 
-// ---------------------------------------------------------------------------
 // Registry
-// ---------------------------------------------------------------------------
 
 /** All available breathing patterns. */
 export const BREATHING_PATTERNS: BreathingPattern[] = [

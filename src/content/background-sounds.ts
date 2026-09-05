@@ -12,9 +12,7 @@
 
 import type { BackgroundSound } from '../types/audio';
 
-// ---------------------------------------------------------------------------
 // Sound Definitions
-// ---------------------------------------------------------------------------
 
 export const BACKGROUND_SOUNDS: BackgroundSound[] = [
   {

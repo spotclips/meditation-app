@@ -25,9 +25,7 @@ const COLORS = {
   white: '#FFFFFF',
 };
 
-// ---------------------------------------------------------------------------
 // Dynamic Concentric Rings
-// ---------------------------------------------------------------------------
 function DynamicRings({ isPaused, phase, duration, isActive }: { isPaused: boolean, phase: string, duration: number, isActive: boolean }) {
   const scale = useRef(new Animated.Value(0.5)).current;
   const opacity = useRef(new Animated.Value(0)).current;
@@ -115,9 +113,7 @@ function DynamicRings({ isPaused, phase, duration, isActive }: { isPaused: boole
   );
 }
 
-// ---------------------------------------------------------------------------
 // Waveform Progress
-// ---------------------------------------------------------------------------
 function WaveformProgress({ progress, darkTheme = false }: { progress: number, darkTheme?: boolean }) {
   // A generic aesthetic waveform pattern
   const bars = [
@@ -199,10 +195,7 @@ const MiniPlayingIndicator = ({ isPlaying }: { isPlaying: boolean }) => {
   );
 };
 
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
 // Session Screen
-// ---------------------------------------------------------------------------
 export default function SessionScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const actualId = id ?? useLocalSearchParams().meditationId;
@@ -428,9 +421,7 @@ export default function SessionScreen() {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Styles
-// ---------------------------------------------------------------------------
 
 const styles = StyleSheet.create({
   container: {

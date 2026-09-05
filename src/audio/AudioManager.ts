@@ -46,10 +46,8 @@ export class AudioManager {
     }
   }
   
-  // ---------------------------------------------------------------------------
-  // Background Audio
-  // ---------------------------------------------------------------------------
-  
+    // Background Audio
+    
   public async loadBackground(source: AudioSource, defaultVolume: number = 0.6) {
     this.state.backgroundVolume = defaultVolume;
     
@@ -105,10 +103,8 @@ export class AudioManager {
     }
   }
   
-  // ---------------------------------------------------------------------------
-  // Voice Audio
-  // ---------------------------------------------------------------------------
-  
+    // Voice Audio
+    
   public async loadVoice(source: AudioSource, defaultVolume: number = 1.0) {
     this.state.voiceVolume = defaultVolume;
     
@@ -195,10 +191,8 @@ export class AudioManager {
     this.emitState();
   }
   
-  // ---------------------------------------------------------------------------
-  // Ducking & Fading
-  // ---------------------------------------------------------------------------
-  
+    // Ducking & Fading
+    
   private duckBackground() {
     if (!this.bgPlayer || this.state.backgroundStatus !== 'playing') return;
     // Duck to 30% of target volume
@@ -241,10 +235,8 @@ export class AudioManager {
     }, 50);
   }
   
-  // ---------------------------------------------------------------------------
-  // Global Controls
-  // ---------------------------------------------------------------------------
-  
+    // Global Controls
+    
   public pauseAll() {
     this.pauseVoice();
     this.pauseBackground();
@@ -257,10 +249,8 @@ export class AudioManager {
     this.listeners.clear();
   }
   
-  // ---------------------------------------------------------------------------
-  // Events
-  // ---------------------------------------------------------------------------
-  
+    // Events
+    
   public addEventListener(listener: AudioEventListener) {
     this.listeners.add(listener);
     listener({ ...this.state });

@@ -6,9 +6,7 @@
  * no application logic changes required.
  */
 
-// ---------------------------------------------------------------------------
 // Enums / Union Types
-// ---------------------------------------------------------------------------
 
 /** High-level meditation categories for library organization. */
 export type MeditationCategory =
@@ -41,9 +39,7 @@ export type MeditationStepType =
   | 'instruction'    // On-screen text instruction (no audio)
   | 'completion';    // Session is ending
 
-// ---------------------------------------------------------------------------
 // Meditation Step (timeline event)
-// ---------------------------------------------------------------------------
 
 /**
  * A single event on the meditation timeline.
@@ -86,9 +82,7 @@ export interface MeditationStep {
   breathingPatternId?: string;
 }
 
-// ---------------------------------------------------------------------------
 // Posture
-// ---------------------------------------------------------------------------
 
 export interface Posture {
   type: PostureType;
@@ -98,9 +92,7 @@ export interface Posture {
   imageAsset?: string;
 }
 
-// ---------------------------------------------------------------------------
 // Meditation (the full content definition)
-// ---------------------------------------------------------------------------
 
 /**
  * A complete meditation definition.

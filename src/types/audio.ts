@@ -5,9 +5,7 @@
  * (playback status, volume). The audio manager implementation consumes these.
  */
 
-// ---------------------------------------------------------------------------
 // Background Sound
-// ---------------------------------------------------------------------------
 
 /** Available background sound categories. */
 export type BackgroundSoundType =
@@ -48,9 +46,7 @@ export interface BackgroundSound {
   categories?: string[];
 }
 
-// ---------------------------------------------------------------------------
 // Voice
-// ---------------------------------------------------------------------------
 
 /**
  * A voice configuration for guided meditations.
@@ -69,9 +65,7 @@ export interface VoiceConfig {
   assetPrefix: string;
 }
 
-// ---------------------------------------------------------------------------
 // Audio State (runtime)
-// ---------------------------------------------------------------------------
 
 /** Playback status of a single audio channel. */
 export type PlaybackStatus = 'idle' | 'loading' | 'playing' | 'paused' | 'error';
@@ -111,9 +105,7 @@ export const INITIAL_AUDIO_STATE: AudioState = {
   currentBackgroundSoundId: null,
 };
 
-// ---------------------------------------------------------------------------
 // Audio Manager Events
-// ---------------------------------------------------------------------------
 
 /**
  * Events emitted by the audio manager.

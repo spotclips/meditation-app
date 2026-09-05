@@ -13,8 +13,6 @@ import { getSelectableSounds } from '../../src/content/background-sounds';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from '../../src/i18n/LanguageContext';
 
-// Removing manual SVGs in favor of generated PNG illustrations
-
 const categories = [
   { id: 'calm', label: 'Calm', meditationId: 'calm-breathing-5min' },
   { id: 'stress-relief', label: 'Stress Relief', meditationId: 'stress-relief-10min' },

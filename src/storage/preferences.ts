@@ -8,9 +8,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EndingType } from '../types/session';
 
-// ---------------------------------------------------------------------------
 // Keys
-// ---------------------------------------------------------------------------
 
 const KEYS = {
   VOICE_VOLUME: '@stillness/voice_volume',
@@ -21,9 +19,7 @@ const KEYS = {
   VOICE_ENABLED: '@stillness/voice_enabled',
 } as const;
 
-// ---------------------------------------------------------------------------
 // Preferences Interface
-// ---------------------------------------------------------------------------
 
 export interface UserPreferences {
   voiceVolume: number;
@@ -43,9 +39,7 @@ const DEFAULT_PREFERENCES: UserPreferences = {
   voiceEnabled: true,
 };
 
-// ---------------------------------------------------------------------------
 // Read / Write
-// ---------------------------------------------------------------------------
 
 /**
  * Load all user preferences. Returns defaults for any missing values.

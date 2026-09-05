@@ -111,18 +111,10 @@ export class SessionManager {
     
     if (step.type === 'voice' && this.config.voiceEnabled !== false) {
       if (step.audioAsset) {
-        // In a real app we'd load and play the asset
-        // this.audioManager.loadVoice(step.audioAsset).then(() => {
-        //   this.audioManager.playVoice(() => {
-        //     this.meditationEngine.markVoiceComplete();
-        //   });
-        // });
-        
-        // Mock voice playing
         console.log(`[SessionManager] Playing voice: ${step.audioAsset}`);
         setTimeout(() => {
           this.meditationEngine.markVoiceComplete();
-        }, 3000); // Mock 3s duration
+        }, 3000); 
       }
     } else if (step.type === 'breathing') {
       // Start or stop breathing engine based on step config
@@ -146,10 +138,8 @@ export class SessionManager {
     }
   }
   
-  // ---------------------------------------------------------------------------
-  // Public Controls
-  // ---------------------------------------------------------------------------
-  
+    // Public Controls
+    
   public start() {
     this.meditationEngine.start();
     if (this.config.backgroundSoundId) {

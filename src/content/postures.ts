@@ -7,9 +7,7 @@
 
 import type { Posture, PostureType } from '../types/meditation';
 
-// ---------------------------------------------------------------------------
 // Posture Definitions
-// ---------------------------------------------------------------------------
 
 export const POSTURES: Record<PostureType, Posture> = {
   seated: {

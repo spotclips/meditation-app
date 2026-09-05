@@ -11,7 +11,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.stillness.meditation",
       "infoPlist": {
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "splash": {
@@ -26,14 +28,28 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "package": "com.stillness.meditation"
+      "package": "com.stillness.meditation",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router",
-      "expo-audio"
-    ]
+      "expo-audio",
+      "expo-font",
+      "expo-asset"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6e12975b-957a-4dbf-8184-011c8d2b34fd"
+      }
+    }
   }
 }

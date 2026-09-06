@@ -61,6 +61,9 @@ const ILLUSTRATIONS: Record<string, any> = {
   'soft': require('../../assets/images/yoga_illustration.png'),
 };
 
+const TOP_CARD_WIDTH = width * 0.85;
+const BOTTOM_CARD_WIDTH = width * 0.76;
+
 export default function MyPlanScreen() {
   const router = useRouter();
   const { t } = useTranslation();
@@ -205,7 +208,7 @@ export default function MyPlanScreen() {
         </View>
         <Text style={styles.sectionTitle}>{t('recommendedForYou')}</Text>
         <View style={styles.recommendationContainer}>
-          {renderTopCard(recommendedCategory, width - spacing.xl * 2)}
+          {renderTopCard(recommendedCategory, TOP_CARD_WIDTH)}
         </View>
 
         {/* Favourite Section */}
@@ -215,13 +218,14 @@ export default function MyPlanScreen() {
             <ScrollView 
               horizontal 
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.topCardScroll}
+              contentContainerStyle={[styles.topCardScroll, { paddingHorizontal: (width - TOP_CARD_WIDTH) / 2 }]}
               decelerationRate="fast"
-              snapToInterval={width - spacing.xl * 2 + spacing.md}
+              snapToInterval={TOP_CARD_WIDTH + spacing.md}
+              snapToAlignment="center"
             >
               {favouriteIds.map(favId => {
                 const favCategory = categories.find(c => c.id === favId);
-                return renderTopCard(favCategory, width - spacing.xl * 2);
+                return renderTopCard(favCategory, TOP_CARD_WIDTH);
               })}
             </ScrollView>
           </>
@@ -234,9 +238,10 @@ export default function MyPlanScreen() {
         <ScrollView 
           horizontal 
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalScroll}
+          contentContainerStyle={[styles.horizontalScroll, { paddingHorizontal: (width - BOTTOM_CARD_WIDTH) / 2, gap: spacing.md }]}
           decelerationRate="fast"
-          snapToInterval={width * 0.72 + spacing.lg}
+          snapToInterval={BOTTOM_CARD_WIDTH + spacing.md}
+          snapToAlignment="center"
         >
           {categories.map((cat, index) => {
             const cardBg = getCategoryCardColor(cat.id);
@@ -350,9 +355,9 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
   },
   recommendationContainer: {
-    paddingHorizontal: spacing.xl,
-    marginBottom: spacing['2xl'],
-  },
+            alignItems: 'center',
+            marginBottom: spacing['2xl'],
+          },
   headerLogoPlaceholder: {
     width: 48,
     height: 48,
@@ -397,13 +402,11 @@ const styles = StyleSheet.create({
     color: '#555555',
   },
   topCardScroll: {
-    paddingHorizontal: spacing.xl,
     gap: spacing.md,
     marginBottom: spacing['2xl'],
   },
   topCard: {
     backgroundColor: colors.bg.surface,
-    width: width * 0.85,
     borderRadius: 28,
     padding: spacing.xl,
     flexDirection: 'row',
@@ -476,11 +479,10 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   horizontalScroll: {
-    paddingHorizontal: spacing.xl,
-    gap: spacing.lg,
+    // defined inline
   },
   bottomCard: {
-    width: width * 0.72,
+    width: BOTTOM_CARD_WIDTH,
     height: 320,
     borderRadius: 32,
     overflow: 'hidden',

@@ -22,7 +22,7 @@ import { formatDuration } from '../../src/utils/time';
 const COLORS = {
   green: '#8DB776',
   orange: '#F58322',
-  twilight: '#1A192D',
+  twilight: '#3F4E85', // Changed from #1A192D to a rich celestial indigo
   white: '#FFFFFF',
 };
 

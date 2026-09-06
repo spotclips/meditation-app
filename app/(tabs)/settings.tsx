@@ -196,8 +196,8 @@ const styles = StyleSheet.create({
     marginBottom: spacing['3xl'],
   },
   title: {
-    ...typography.hero,
-    fontWeight: '300',
+    fontWeight: '700',
+    fontSize: 32,
     color: colors.text.primary,
     marginBottom: spacing.xs,
   },

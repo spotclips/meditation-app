@@ -114,11 +114,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#656A7A',
-    marginBottom: 20,
-    marginLeft: 4,
+    fontSize: 32,
+    fontWeight: '700',
+    color: colors.text.primary,
+    marginBottom: 24,
   },
   list: {
     gap: 2,

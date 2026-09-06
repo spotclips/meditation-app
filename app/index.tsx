@@ -6,8 +6,7 @@ import Animated, {
   useSharedValue, 
   useAnimatedStyle, 
   withTiming, 
-  Easing,
-  runOnJS
+  Easing
 } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
@@ -27,15 +26,14 @@ export default function SplashScreen() {
     iconScale.value = withTiming(1.05, { duration: 2500, easing: Easing.inOut(Easing.ease) });
     
     // Animate progress bar over 2.5 seconds
-    progress.value = withTiming(
-      1, 
-      { duration: 2500, easing: Easing.inOut(Easing.ease) },
-      (finished) => {
-        if (finished) {
-          runOnJS(navigateToHome)();
-        }
-      }
-    );
+    progress.value = withTiming(1, { duration: 2500, easing: Easing.inOut(Easing.ease) });
+    
+    // Fallback navigation safely without worklets
+    const timer = setTimeout(() => {
+      navigateToHome();
+    }, 2600);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const navigateToHome = () => {

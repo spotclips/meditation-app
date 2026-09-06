@@ -61,8 +61,8 @@ const ILLUSTRATIONS: Record<string, any> = {
   'soft': require('../../assets/images/yoga_illustration.png'),
 };
 
-const TOP_CARD_WIDTH = width * 0.82;
-const BOTTOM_CARD_WIDTH = width * 0.80;
+const TOP_CARD_WIDTH = width * 0.86;
+const BOTTOM_CARD_WIDTH = width * 0.86;
 
 export default function MyPlanScreen() {
   const router = useRouter();

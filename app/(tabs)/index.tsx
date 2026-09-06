@@ -71,6 +71,7 @@ export default function MyPlanScreen() {
   const [userName, setUserName] = useState<string>('');
   const [mood, setMood] = useState<string | null>(null);
   const [moodModalVisible, setMoodModalVisible] = useState(false);
+  const [isMoodFeatureEnabled, setIsMoodFeatureEnabled] = useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -103,6 +104,15 @@ export default function MyPlanScreen() {
           }
         } catch (e) {
           console.error('Failed to load mood', e);
+        }
+        
+        try {
+          const storedFeeling = await AsyncStorage.getItem('USER_ASK_FEELING');
+          if (storedFeeling !== null) {
+            setIsMoodFeatureEnabled(storedFeeling === 'true');
+          }
+        } catch (e) {
+          console.error('Failed to load mood setting', e);
         }
       };
       loadData();
@@ -248,16 +258,18 @@ export default function MyPlanScreen() {
           </View>
           
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-            <TouchableOpacity style={styles.moodIconBtn} onPress={() => setMoodModalVisible(true)}>
-              {mood ? (
-                <FontAwesome5 name={MOOD_MAP[mood].icon} size={24} color={MOOD_MAP[mood].color} solid={false} />
-              ) : (
-                <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-                  <FontAwesome5 name="smile" size={24} color={colors.text.secondary} style={{opacity: 0.7}} solid={false} />
-                  <Text style={[styles.dateText, {fontSize: 15, opacity: 0.7}]}>Set Mood</Text>
-                </View>
-              )}
-            </TouchableOpacity>
+            {isMoodFeatureEnabled && (
+              <TouchableOpacity style={styles.moodIconBtn} onPress={() => setMoodModalVisible(true)}>
+                {mood ? (
+                  <FontAwesome5 name={MOOD_MAP[mood].icon} size={24} color={MOOD_MAP[mood].color} solid={false} />
+                ) : (
+                  <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+                    <FontAwesome5 name="smile" size={24} color={colors.text.secondary} style={{opacity: 0.7}} solid={false} />
+                    <Text style={[styles.dateText, {fontSize: 15, opacity: 0.7}]}>Set Mood</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            )}
 
             <View style={styles.dateChip}>
               <Text style={styles.dateText}>Monday, Jan 29</Text>

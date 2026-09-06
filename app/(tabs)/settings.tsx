@@ -16,7 +16,6 @@ export default function SettingsScreen() {
   // Modal State
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<'gender' | 'timezone' | 'language' | null>(null);
-  const [moodPromptVisible, setMoodPromptVisible] = useState(false);
 
   const genderOptions = ['Female', 'Male', 'Non-binary', 'Prefer not to say'];
   const timezoneOptions = ['Pacific Time (PT)', 'Mountain Time (MT)', 'Central Time (CT)', 'Eastern Time (ET)', 'Greenwich Mean Time (GMT)', 'Central European Time (CET)', 'India Standard Time (IST)', 'Japan Standard Time (JST)', 'Australian Eastern Time (AEST)', 'Other'];
@@ -70,10 +69,6 @@ export default function SettingsScreen() {
   const handleFeelingChange = (val: boolean) => {
     setAskFeeling(val);
     saveSetting('USER_ASK_FEELING', val.toString());
-    if (val) {
-      // Immediately show the prompt when enabled to demonstrate what it looks like
-      setMoodPromptVisible(true);
-    }
   };
 
   const openModal = (type: 'gender' | 'timezone' | 'language') => {
@@ -181,22 +176,6 @@ export default function SettingsScreen() {
                 <Text style={styles.modalOptionText}>{opt}</Text>
               </TouchableOpacity>
             ))}
-          </View>
-        </TouchableOpacity>
-      </Modal>
-
-      {/* Mood Prompt Modal */}
-      <Modal visible={moodPromptVisible} transparent animationType="fade">
-        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setMoodPromptVisible(false)}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>How are you feeling today?</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 20 }}>
-              {['😔', '😐', '🙂', '🤩'].map(emoji => (
-                <TouchableOpacity key={emoji} onPress={() => setMoodPromptVisible(false)} style={styles.emojiButton}>
-                  <Text style={{ fontSize: 48 }}>{emoji}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
           </View>
         </TouchableOpacity>
       </Modal>

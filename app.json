@@ -12,8 +12,10 @@
       "bundleIdentifier": "com.stillness.meditation",
       "infoPlist": {
         "UIBackgroundModes": [
+          "audio",
           "audio"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "splash": {

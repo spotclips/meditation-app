@@ -236,7 +236,7 @@ export default function MyPlanScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalScroll}
           decelerationRate="fast"
-          snapToInterval={width * 0.75 + spacing.lg}
+          snapToInterval={width * 0.72 + spacing.lg}
         >
           {categories.map((cat, index) => {
             const cardBg = getCategoryCardColor(cat.id);

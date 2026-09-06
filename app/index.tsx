@@ -91,7 +91,7 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#181829', // Matching native splash screen color
+    backgroundColor: '#FFFFFF', // Clean white to contrast with dark icon
   },
   iconContainer: {
     flex: 1,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     width: width * 0.65,
     height: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     borderRadius: 2,
     overflow: 'hidden',
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: 'rgba(0, 0, 0, 0.4)',
     marginTop: 24,
   },
 });

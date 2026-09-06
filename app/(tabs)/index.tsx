@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -67,8 +67,10 @@ const BOTTOM_CARD_WIDTH = width * 0.86;
 export default function MyPlanScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [favouriteIds, setFavouriteIds] = React.useState<string[]>([]);
-  const [userName, setUserName] = React.useState<string>('');
+  const [favouriteIds, setFavouriteIds] = useState<string[]>([]);
+  const [userName, setUserName] = useState<string>('');
+  const [mood, setMood] = useState<string | null>(null);
+  const [moodModalVisible, setMoodModalVisible] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -86,6 +88,21 @@ export default function MyPlanScreen() {
           }
         } catch (e) {
           console.error('Failed to load data', e);
+        }
+        
+        try {
+          const storedMoodStr = await AsyncStorage.getItem('USER_MOOD');
+          if (storedMoodStr) {
+            const storedMood = JSON.parse(storedMoodStr);
+            const today = new Date().toDateString();
+            if (storedMood.date === today) {
+              setMood(storedMood.mood);
+            } else {
+              setMood(null); // Reset mood on a new day
+            }
+          }
+        } catch (e) {
+          console.error('Failed to load mood', e);
         }
       };
       loadData();
@@ -106,6 +123,26 @@ export default function MyPlanScreen() {
     } catch (e) {
       console.error('Failed to save favourite', e);
     }
+  };
+  
+  const handleMoodSelect = async (selectedMood: string) => {
+    setMood(selectedMood);
+    setMoodModalVisible(false);
+    try {
+      await AsyncStorage.setItem('USER_MOOD', JSON.stringify({
+        mood: selectedMood,
+        date: new Date().toDateString()
+      }));
+    } catch (e) {
+      console.error('Failed to save mood', e);
+    }
+  };
+
+  const MOOD_MAP: Record<string, { icon: any, color: string, label: string }> = {
+    'great': { icon: 'smile', color: '#8DB776', label: 'Great' },
+    'neutral': { icon: 'meh', color: '#FBC576', label: 'Okay' },
+    'stressed': { icon: 'frown', color: '#FF5252', label: 'Stressed' },
+    'tired': { icon: 'moon', color: '#8993E8', label: 'Tired' },
   };
   
   const currentHour = new Date().getHours();
@@ -133,6 +170,15 @@ export default function MyPlanScreen() {
 
   if (userName.trim().length > 0) {
     greeting += `, ${userName.trim()}`;
+  }
+
+  // Mood-based Recommendation Override
+  if (mood === 'great') {
+    recommendationId = 'mindfulness';
+  } else if (mood === 'stressed') {
+    recommendationId = 'stress-relief';
+  } else if (mood === 'tired') {
+    recommendationId = 'sleep';
   }
 
   const recommendedCategory = categories.find(c => c.id === recommendationId);
@@ -201,8 +247,21 @@ export default function MyPlanScreen() {
             <Feather name={logoIcon} size={24} color={logoColor} />
           </View>
           
-          <View style={styles.dateChip}>
-            <Text style={styles.dateText}>Monday, Jan 29</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <TouchableOpacity style={styles.moodIconBtn} onPress={() => setMoodModalVisible(true)}>
+              {mood ? (
+                <Feather name={MOOD_MAP[mood].icon} size={20} color={MOOD_MAP[mood].color} />
+              ) : (
+                <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+                  <Feather name="smile" size={16} color={colors.text.secondary} style={{opacity: 0.7}} />
+                  <Text style={[styles.dateText, {fontSize: 12, opacity: 0.7, paddingBottom: 1}]}>Set Mood</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+
+            <View style={styles.dateChip}>
+              <Text style={styles.dateText}>Monday, Jan 29</Text>
+            </View>
           </View>
         </View>
 
@@ -320,6 +379,39 @@ export default function MyPlanScreen() {
           })}
         </ScrollView>
       </ScrollView>
+
+      {/* Mood Selection Modal */}
+      <Modal visible={moodModalVisible} transparent animationType="fade">
+        <TouchableOpacity 
+          style={styles.modalOverlay} 
+          activeOpacity={1} 
+          onPress={() => setMoodModalVisible(false)}
+        >
+          <TouchableOpacity 
+            activeOpacity={1} 
+            style={styles.modalContent}
+            onPress={() => {}} // Block tap-through
+          >
+            <Text style={styles.modalTitle}>How are you feeling?</Text>
+            <View style={styles.moodOptionsRow}>
+              {Object.entries(MOOD_MAP).map(([key, data]) => (
+                <TouchableOpacity 
+                  key={key} 
+                  style={[
+                    styles.moodOptionItem, 
+                    mood === key && { backgroundColor: data.color + '15', borderColor: data.color }
+                  ]}
+                  onPress={() => handleMoodSelect(key)}
+                >
+                  <Feather name={data.icon} size={32} color={data.color} style={{marginBottom: 8}} />
+                  <Text style={[styles.moodOptionLabel, mood === key && { color: data.color, fontWeight: '600' }]}>{data.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -381,6 +473,54 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     fontWeight: '500',
     fontSize: 13,
+  },
+  moodIconBtn: {
+    backgroundColor: '#F5F5F5',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    padding: spacing.xl,
+    paddingBottom: spacing['4xl'],
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.text.primary,
+    marginBottom: spacing.xl,
+    marginTop: spacing.sm,
+  },
+  moodOptionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  moodOptionItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    width: '23%',
+  },
+  moodOptionLabel: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: colors.text.secondary,
   },
   pageTitle: {
     fontWeight: '700',

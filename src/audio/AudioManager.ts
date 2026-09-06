@@ -52,6 +52,7 @@ export class AudioManager {
     this.state.backgroundVolume = defaultVolume;
     
     if (this.bgPlayer) {
+      this.bgPlayer.pause(); // Instantly kill old audio (Spotify UX)
       this.bgPlayer.remove();
     }
     
@@ -109,6 +110,7 @@ export class AudioManager {
     this.state.voiceVolume = defaultVolume;
     
     if (this.voicePlayer) {
+      this.voicePlayer.pause();
       this.voicePlayer.remove();
     }
     

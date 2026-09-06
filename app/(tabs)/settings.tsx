@@ -293,9 +293,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.text.primary,
     textAlign: 'center',
-  },
-  emojiButton: {
-    padding: 10,
-    transform: [{ scale: 1 }],
   }
 });

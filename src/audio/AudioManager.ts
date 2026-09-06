@@ -16,6 +16,7 @@ export type AudioEventListener = (state: AudioState) => void;
 export class AudioManager {
   private voicePlayer: AudioPlayer | null = null;
   private bgPlayer: AudioPlayer | null = null;
+  private shouldPlayBackground: boolean = false;
   
   private listeners: Set<AudioEventListener> = new Set();
   
@@ -63,10 +64,21 @@ export class AudioManager {
             this.state.backgroundStatus = 'loading';
             this.emitState();
           }
-        } else if (status.playing) {
-          if (this.state.backgroundStatus !== 'playing') {
-            this.state.backgroundStatus = 'playing';
-            this.emitState();
+        } else {
+          // Loaded and ready
+          if (this.shouldPlayBackground && !status.playing) {
+            // Intent was to play, but native player is paused (likely clobbered by replace)
+            this.bgPlayer?.play();
+          } else if (status.playing) {
+            if (this.state.backgroundStatus !== 'playing') {
+              this.state.backgroundStatus = 'playing';
+              this.emitState();
+            }
+          } else {
+            if (this.state.backgroundStatus !== 'paused' && this.state.backgroundStatus !== 'idle') {
+              this.state.backgroundStatus = 'paused';
+              this.emitState();
+            }
           }
         }
       });
@@ -78,6 +90,7 @@ export class AudioManager {
   }
   
   public playBackground() {
+    this.shouldPlayBackground = true;
     if (!this.bgPlayer) return;
     this.bgPlayer.play();
     this.state.backgroundStatus = 'playing';
@@ -85,6 +98,7 @@ export class AudioManager {
   }
   
   public pauseBackground() {
+    this.shouldPlayBackground = false;
     if (!this.bgPlayer) return;
     this.bgPlayer.pause();
     this.state.backgroundStatus = 'paused';
@@ -92,6 +106,7 @@ export class AudioManager {
   }
   
   public stopBackground() {
+    this.shouldPlayBackground = false;
     if (!this.bgPlayer) return;
     this.bgPlayer.pause();
     this.bgPlayer.seekTo(0);

@@ -212,7 +212,7 @@ export default function MyPlanScreen() {
         </View>
         <Text style={styles.sectionTitle}>{t('recommendedForYou')}</Text>
         <View style={styles.recommendationContainer}>
-          {renderTopCard(recommendedCategory, TOP_CARD_WIDTH)}
+          {renderTopCard({...recommendedCategory, isLast: true}, TOP_CARD_WIDTH)}
         </View>
 
         {/* Favourite Section */}
@@ -337,18 +337,18 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 22,
     color: colors.text.primary,
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: width * 0.07,
     marginBottom: spacing.md,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: width * 0.07,
     marginBottom: spacing.lg,
   },
   recommendationHeader: {
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: width * 0.07,
     marginBottom: spacing.lg,
   },
   greetingText: {

@@ -93,10 +93,10 @@ export function useMeditationSession(
     managerRef.current?.stop();
   }, []);
 
-  const changeBackgroundSound = useCallback((soundId: string) => {
+  const changeBackgroundSound = useCallback(async (soundId: string) => {
     if (managerRef.current) {
-      managerRef.current.changeBackgroundSound(soundId);
       setCurrentBackgroundSoundId(soundId);
+      await managerRef.current.changeBackgroundSound(soundId);
     }
   }, []);
 

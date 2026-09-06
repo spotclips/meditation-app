@@ -395,8 +395,8 @@ export default function SessionScreen() {
               <TouchableOpacity
                 key={sound.id}
                 style={[styles.dockMusicOption, isSelected && styles.dockMusicOptionSelected]}
-                onPress={() => {
-                  changeBackgroundSound(sound.id);
+                onPress={async () => {
+                  await changeBackgroundSound(sound.id);
                   if (isPaused) {
                     togglePlayPause();
                   }

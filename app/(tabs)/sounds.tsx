@@ -30,14 +30,14 @@ export default function SoundsScreen() {
     };
   }, []);
 
-  const togglePlay = (id: string) => {
+  const togglePlay = async (id: string) => {
     if (playingId === id) {
       globalAudioManager.pauseBackground();
       setPlayingId(null);
     } else {
       const sound = sounds.find(s => s.id === id);
       if (sound && sound.audioAsset) {
-        globalAudioManager.loadBackground(sound.audioAsset);
+        await globalAudioManager.loadBackground(sound.audioAsset);
         globalAudioManager.playBackground();
         setPlayingId(id);
       }

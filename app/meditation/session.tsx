@@ -33,32 +33,32 @@ function DynamicRings({ isPaused, phase, duration, isActive }: { isPaused: boole
 
   useEffect(() => {
     if (isPaused || !isActive) {
-      // Slow idle heartbeat animation
+      // Slow idle heartbeat animation (kept prominent and visible)
       Animated.loop(
         Animated.sequence([
           Animated.parallel([
             Animated.timing(scale, {
-              toValue: 0.6,
-              duration: 2500,
+              toValue: 0.9,
+              duration: 3000,
               useNativeDriver: true,
               easing: RNEasing.inOut(RNEasing.ease),
             }),
             Animated.timing(opacity, {
-              toValue: 0.3,
-              duration: 2500,
+              toValue: 0.6,
+              duration: 3000,
               useNativeDriver: true,
             }),
           ]),
           Animated.parallel([
             Animated.timing(scale, {
-              toValue: 0.5,
-              duration: 2500,
+              toValue: 0.7,
+              duration: 3000,
               useNativeDriver: true,
               easing: RNEasing.inOut(RNEasing.ease),
             }),
             Animated.timing(opacity, {
-              toValue: 0.15,
-              duration: 2500,
+              toValue: 0.4,
+              duration: 3000,
               useNativeDriver: true,
             }),
           ]),
@@ -84,13 +84,13 @@ function DynamicRings({ isPaused, phase, duration, isActive }: { isPaused: boole
     } else if (phase === 'exhale') {
       Animated.parallel([
         Animated.timing(scale, {
-          toValue: 0.5,
+          toValue: 0.7,
           duration: duration * 1000,
           useNativeDriver: true,
           easing: RNEasing.inOut(RNEasing.ease),
         }),
         Animated.timing(opacity, {
-          toValue: 0.7,
+          toValue: 0.6,
           duration: duration * 1000,
           useNativeDriver: true,
         }),

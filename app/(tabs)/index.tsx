@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, spacing, typography, radius, getCategoryGradient, getCategoryIconName } from '../../src/utils/theme';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
@@ -142,7 +142,7 @@ export default function MyPlanScreen() {
     'great': { icon: 'smile', color: '#8DB776', label: 'Great' },
     'neutral': { icon: 'meh', color: '#FBC576', label: 'Okay' },
     'stressed': { icon: 'frown', color: '#FF5252', label: 'Stressed' },
-    'tired': { icon: 'moon', color: '#8993E8', label: 'Tired' },
+    'tired': { icon: 'tired', color: '#8993E8', label: 'Tired' },
   };
   
   const currentHour = new Date().getHours();
@@ -250,10 +250,10 @@ export default function MyPlanScreen() {
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
             <TouchableOpacity style={styles.moodIconBtn} onPress={() => setMoodModalVisible(true)}>
               {mood ? (
-                <Feather name={MOOD_MAP[mood].icon} size={20} color={MOOD_MAP[mood].color} />
+                <FontAwesome5 name={MOOD_MAP[mood].icon} size={20} color={MOOD_MAP[mood].color} solid={false} />
               ) : (
                 <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-                  <Feather name="smile" size={16} color={colors.text.secondary} style={{opacity: 0.7}} />
+                  <FontAwesome5 name="smile" size={16} color={colors.text.secondary} style={{opacity: 0.7}} solid={false} />
                   <Text style={[styles.dateText, {fontSize: 12, opacity: 0.7, paddingBottom: 1}]}>Set Mood</Text>
                 </View>
               )}
@@ -402,11 +402,12 @@ export default function MyPlanScreen() {
                     style={styles.moodOptionItem}
                     onPress={() => handleMoodSelect(key)}
                   >
-                    <Feather 
+                    <FontAwesome5 
                       name={data.icon} 
-                      size={32} 
+                      size={28} 
                       color={isActive ? data.color : '#C4C4C4'} 
-                      style={{marginBottom: 8}} 
+                      style={{marginBottom: 10}} 
+                      solid={false}
                     />
                     <Text 
                       style={[

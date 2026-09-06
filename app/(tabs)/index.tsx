@@ -61,8 +61,8 @@ const ILLUSTRATIONS: Record<string, any> = {
   'soft': require('../../assets/images/yoga_illustration.png'),
 };
 
-const TOP_CARD_WIDTH = width * 0.85;
-const BOTTOM_CARD_WIDTH = width * 0.85;
+const TOP_CARD_WIDTH = width * 0.82;
+const BOTTOM_CARD_WIDTH = width * 0.80;
 
 export default function MyPlanScreen() {
   const router = useRouter();
@@ -152,7 +152,11 @@ export default function MyPlanScreen() {
     return (
       <TouchableOpacity 
         key={category.id}
-        style={[styles.topCard, { width: cardWidth, backgroundColor: cardBg }]} 
+        style={[
+          styles.topCard, 
+          { width: cardWidth, backgroundColor: cardBg },
+          category.isLast ? {} : { marginRight: spacing.md }
+        ]} 
         activeOpacity={0.9}
         onPress={() => router.push(`/meditation/session?id=${category.meditationId}`)}
       >
@@ -221,11 +225,11 @@ export default function MyPlanScreen() {
               contentContainerStyle={[styles.topCardScroll, { paddingHorizontal: (width - TOP_CARD_WIDTH) / 2 }]}
               decelerationRate="fast"
               snapToInterval={TOP_CARD_WIDTH + spacing.md}
-              snapToAlignment="center"
+              snapToAlignment="start"
             >
-              {favouriteIds.map(favId => {
+              {favouriteIds.map((favId, index) => {
                 const favCategory = categories.find(c => c.id === favId);
-                return renderTopCard(favCategory, TOP_CARD_WIDTH);
+                return renderTopCard({...favCategory, isLast: index === favouriteIds.length - 1}, TOP_CARD_WIDTH);
               })}
             </ScrollView>
           </>
@@ -238,10 +242,10 @@ export default function MyPlanScreen() {
         <ScrollView 
           horizontal 
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={[styles.horizontalScroll, { paddingHorizontal: (width - BOTTOM_CARD_WIDTH) / 2, gap: spacing.md }]}
+          contentContainerStyle={[styles.horizontalScroll, { paddingHorizontal: (width - BOTTOM_CARD_WIDTH) / 2 }]}
           decelerationRate="fast"
           snapToInterval={BOTTOM_CARD_WIDTH + spacing.md}
-          snapToAlignment="center"
+          snapToAlignment="start"
         >
           {categories.map((cat, index) => {
             const cardBg = getCategoryCardColor(cat.id);
@@ -253,7 +257,11 @@ export default function MyPlanScreen() {
             return (
               <TouchableOpacity 
                 key={cat.id} 
-                style={[styles.bottomCard, { backgroundColor: cardBg }]} 
+                style={[
+                  styles.bottomCard, 
+                  { backgroundColor: cardBg },
+                  index === categories.length - 1 ? {} : { marginRight: spacing.md }
+                ]} 
                 activeOpacity={0.9}
                 onPress={() => router.push(`/meditation/session?id=${cat.meditationId}`)}
               >
@@ -402,7 +410,6 @@ const styles = StyleSheet.create({
     color: '#555555',
   },
   topCardScroll: {
-    gap: spacing.md,
     marginBottom: spacing['2xl'],
   },
   topCard: {

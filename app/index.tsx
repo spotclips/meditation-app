@@ -7,9 +7,7 @@ import Animated, {
   useAnimatedStyle, 
   withTiming, 
   Easing,
-  runOnJS,
-  withRepeat,
-  withSequence
+  runOnJS
 } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
@@ -22,18 +20,11 @@ export default function SplashScreen() {
   const iconScale = useSharedValue(1);
 
   useEffect(() => {
-    // Fade in text content
-    contentOpacity.value = withTiming(1, { duration: 800 });
+    // Fade in text content slowly so frame 1 matches native splash exactly
+    contentOpacity.value = withTiming(1, { duration: 1200 });
     
-    // Breathing animation for icon
-    iconScale.value = withRepeat(
-      withSequence(
-        withTiming(1.05, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
-        withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) })
-      ),
-      -1, // Infinite repeat
-      true // Reverse
-    );
+    // Gentle breathing scale for the icon
+    iconScale.value = withTiming(1.05, { duration: 2500, easing: Easing.inOut(Easing.ease) });
     
     // Animate progress bar over 2.5 seconds
     progress.value = withTiming(
@@ -72,7 +63,7 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Centered App Icon with Breathing Animation */}
+      {/* Centered App Icon to match Native Splash Screen */}
       <View style={styles.iconContainer}>
         <Animated.Image 
           source={require('../assets/icon.png')}
@@ -102,16 +93,17 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#181829', // Matching the image's night sky edge
+    backgroundColor: '#181829', // Matching native splash screen color
   },
   iconContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   icon: {
-    width: 200, // Standard app icon size for splash
-    height: 200,
+    width: 180,
+    height: 180,
+    borderRadius: 40,
   },
   bottomArea: {
     position: 'absolute',

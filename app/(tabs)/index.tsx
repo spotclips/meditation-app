@@ -250,11 +250,11 @@ export default function MyPlanScreen() {
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
             <TouchableOpacity style={styles.moodIconBtn} onPress={() => setMoodModalVisible(true)}>
               {mood ? (
-                <FontAwesome5 name={MOOD_MAP[mood].icon} size={20} color={MOOD_MAP[mood].color} solid={false} />
+                <FontAwesome5 name={MOOD_MAP[mood].icon} size={24} color={MOOD_MAP[mood].color} solid={false} />
               ) : (
                 <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-                  <FontAwesome5 name="smile" size={16} color={colors.text.secondary} style={{opacity: 0.7}} solid={false} />
-                  <Text style={[styles.dateText, {fontSize: 12, opacity: 0.7, paddingBottom: 1}]}>Set Mood</Text>
+                  <FontAwesome5 name="smile" size={24} color={colors.text.secondary} style={{opacity: 0.7}} solid={false} />
+                  <Text style={[styles.dateText, {fontSize: 15, opacity: 0.7}]}>Set Mood</Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -486,13 +486,11 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.text.secondary,
     fontWeight: '500',
-    fontSize: 13,
+    fontSize: 15,
   },
   moodIconBtn: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'transparent',
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -53,11 +53,11 @@ export class AudioManager {
     
     if (this.bgPlayer) {
       this.bgPlayer.pause(); // Instantly kill old audio (Spotify UX)
-      this.bgPlayer.remove();
+      this.bgPlayer.replace(source);
+    } else {
+      this.bgPlayer = createAudioPlayer(source, { updateInterval: 500 });
+      this.bgPlayer.loop = true;
     }
-    
-    this.bgPlayer = createAudioPlayer(source, { updateInterval: 500 });
-    this.bgPlayer.loop = true;
     this.bgPlayer.volume = defaultVolume;
     
     this.state.backgroundStatus = 'loading';
@@ -111,11 +111,11 @@ export class AudioManager {
     
     if (this.voicePlayer) {
       this.voicePlayer.pause();
-      this.voicePlayer.remove();
+      this.voicePlayer.replace(source);
+    } else {
+      this.voicePlayer = createAudioPlayer(source, { updateInterval: 200 });
+      this.voicePlayer.loop = false;
     }
-    
-    this.voicePlayer = createAudioPlayer(source, { updateInterval: 200 });
-    this.voicePlayer.loop = false;
     this.voicePlayer.volume = defaultVolume;
     
     // Add status listener to detect when voice finishes

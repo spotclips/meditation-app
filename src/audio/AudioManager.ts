@@ -246,8 +246,14 @@ export class AudioManager {
   
   public destroy() {
     if (this.fadeInterval) clearInterval(this.fadeInterval);
-    if (this.voicePlayer) this.voicePlayer.remove();
-    if (this.bgPlayer) this.bgPlayer.remove();
+    if (this.voicePlayer) {
+      this.voicePlayer.pause();
+      this.voicePlayer.remove();
+    }
+    if (this.bgPlayer) {
+      this.bgPlayer.pause();
+      this.bgPlayer.remove();
+    }
     this.listeners.clear();
   }
   

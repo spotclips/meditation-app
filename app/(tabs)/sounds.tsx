@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { useFocusEffect } from 'expo-router';
 import { getSelectableSounds } from '../../src/content/background-sounds';
 import { colors } from '../../src/utils/theme';
 import { globalAudioManager } from '../../src/audio/AudioManager';
@@ -23,12 +24,16 @@ export default function SoundsScreen() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    // Cleanup audio when leaving the screen
-    return () => {
-      globalAudioManager.stopBackground();
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // Nothing on focus
+      return () => {
+        // Cleanup audio when leaving the tab
+        globalAudioManager.stopBackground();
+        setPlayingId(null);
+      };
+    }, [])
+  );
 
   const togglePlay = async (id: string) => {
     if (playingId === id) {

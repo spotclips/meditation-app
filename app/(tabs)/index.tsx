@@ -62,7 +62,7 @@ const ILLUSTRATIONS: Record<string, any> = {
 };
 
 const TOP_CARD_WIDTH = width * 0.85;
-const BOTTOM_CARD_WIDTH = width * 0.76;
+const BOTTOM_CARD_WIDTH = width * 0.85;
 
 export default function MyPlanScreen() {
   const router = useRouter();

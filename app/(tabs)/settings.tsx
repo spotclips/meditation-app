@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, Switch, Modal, TouchableOpacity } from 'react-native';
 import { useTranslation } from '../../src/i18n/LanguageContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Feather } from '@expo/vector-icons';
 import { colors, spacing, radius, typography, glassShadow } from '../../src/utils/theme';
 
 export default function SettingsScreen() {
@@ -124,24 +125,27 @@ export default function SettingsScreen() {
             <View style={styles.divider} />
             <View style={styles.row}>
               <Text style={styles.rowLabel}>{t('gender')}</Text>
-              <TouchableOpacity onPress={() => openModal('gender')}>
-                <Text style={styles.textInput}>{gender || 'Select >'}</Text>
+              <TouchableOpacity onPress={() => openModal('gender')} style={styles.valueRow}>
+                <Text style={[styles.textInput, !gender && styles.textInputPlaceholder]}>{gender || 'Select'}</Text>
+                <Feather name="chevron-right" size={20} color={colors.text.tertiary} style={styles.chevron} />
               </TouchableOpacity>
             </View>
             <View style={styles.divider} />
             <View style={styles.row}>
               <Text style={styles.rowLabel}>{t('timezone')}</Text>
-              <TouchableOpacity onPress={() => openModal('timezone')} style={{ flex: 1 }}>
-                <Text style={styles.textInput} numberOfLines={1} ellipsizeMode="tail">
-                  {country ? (country.match(/\(([^)]+)\)/)?.[1] || country) : 'Select >'}
+              <TouchableOpacity onPress={() => openModal('timezone')} style={[styles.valueRow, { flex: 1 }]}>
+                <Text style={[styles.textInput, !country && styles.textInputPlaceholder]} numberOfLines={1} ellipsizeMode="tail">
+                  {country ? (country.match(/\(([^)]+)\)/)?.[1] || country) : 'Select'}
                 </Text>
+                <Feather name="chevron-right" size={20} color={colors.text.tertiary} style={styles.chevron} />
               </TouchableOpacity>
             </View>
             <View style={styles.divider} />
             <View style={styles.row}>
               <Text style={styles.rowLabel}>{t('language')}</Text>
-              <TouchableOpacity onPress={() => openModal('language')}>
+              <TouchableOpacity onPress={() => openModal('language')} style={styles.valueRow}>
                 <Text style={styles.textInput}>{languageOptions.find(o => o.code === language)?.label || 'English'}</Text>
+                <Feather name="chevron-right" size={20} color={colors.text.tertiary} style={styles.chevron} />
               </TouchableOpacity>
             </View>
           </View>
@@ -260,7 +264,21 @@ const styles = StyleSheet.create({
     color: '#87BA86', 
     fontWeight: '500',
     textAlign: 'right',
-    minWidth: 100,
+  },
+  textInputPlaceholder: {
+    color: colors.text.tertiary,
+    fontWeight: '400',
+  },
+  valueRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 4,
+  },
+  chevron: {
+    opacity: 0.6,
+    marginTop: 2,
+    marginRight: -4,
   },
   divider: {
     height: 1,

@@ -306,8 +306,6 @@ export default function MyPlanScreen() {
             );
           })}
         </ScrollView>
-
-        <View style={styles.bottomSpacer} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -320,7 +318,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: spacing.lg,
-    paddingBottom: 120,
+    paddingBottom: 100,
   },
   sectionTitle: {
     fontWeight: '400',

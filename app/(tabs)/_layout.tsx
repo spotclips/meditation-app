@@ -19,7 +19,12 @@ function TabIcon({ icon, label, focused }: { icon: any; label: string; focused: 
         color={focused ? colors.accent.secondary : colors.text.tertiary} 
         style={[styles.tabIcon, focused && styles.tabIconActive]}
       />
-      <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>{label}</Text>
+      <Text 
+        style={[styles.tabLabel, focused && styles.tabLabelActive]}
+        numberOfLines={1}
+      >
+        {label}
+      </Text>
     </View>
   );
 }
@@ -99,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 4,
     paddingTop: 4,
+    minWidth: 75,
   },
   tabIcon: {
     opacity: 0.8,

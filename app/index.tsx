@@ -7,7 +7,9 @@ import Animated, {
   useAnimatedStyle, 
   withTiming, 
   Easing,
-  runOnJS
+  runOnJS,
+  withRepeat,
+  withSequence
 } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
@@ -17,10 +19,21 @@ export default function SplashScreen() {
   
   const progress = useSharedValue(0);
   const contentOpacity = useSharedValue(0);
+  const iconScale = useSharedValue(1);
 
   useEffect(() => {
     // Fade in text content
     contentOpacity.value = withTiming(1, { duration: 800 });
+    
+    // Breathing animation for icon
+    iconScale.value = withRepeat(
+      withSequence(
+        withTiming(1.05, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+        withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1, // Infinite repeat
+      true // Reverse
+    );
     
     // Animate progress bar over 2.5 seconds
     progress.value = withTiming(
@@ -50,14 +63,23 @@ export default function SplashScreen() {
       alignItems: 'center',
     };
   });
+  
+  const iconStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: iconScale.value }],
+    };
+  });
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../assets/images/splash_screen_new.png')}
-        style={{ position: 'absolute', width: '100%', height: '100%' }}
-        resizeMode="contain"
-      />
+      {/* Centered App Icon with Breathing Animation */}
+      <View style={styles.iconContainer}>
+        <Animated.Image 
+          source={require('../assets/icon.png')}
+          style={[styles.icon, iconStyle]}
+          resizeMode="contain"
+        />
+      </View>
       
       {/* Bottom Progress Area */}
       <Animated.View style={[styles.bottomArea, contentStyle]}>
@@ -81,6 +103,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#181829', // Matching the image's night sky edge
+  },
+  iconContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 200, // Standard app icon size for splash
+    height: 200,
   },
   bottomArea: {
     position: 'absolute',

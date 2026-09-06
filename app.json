@@ -19,7 +19,7 @@
       }
     },
     "splash": {
-      "image": "./assets/images/splash_screen_new.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#181829"
     },

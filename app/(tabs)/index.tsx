@@ -394,19 +394,32 @@ export default function MyPlanScreen() {
           >
             <Text style={styles.modalTitle}>How are you feeling?</Text>
             <View style={styles.moodOptionsRow}>
-              {Object.entries(MOOD_MAP).map(([key, data]) => (
-                <TouchableOpacity 
-                  key={key} 
-                  style={[
-                    styles.moodOptionItem, 
-                    mood === key && { backgroundColor: data.color + '15', borderColor: data.color }
-                  ]}
-                  onPress={() => handleMoodSelect(key)}
-                >
-                  <Feather name={data.icon} size={32} color={data.color} style={{marginBottom: 8}} />
-                  <Text style={[styles.moodOptionLabel, mood === key && { color: data.color, fontWeight: '600' }]}>{data.label}</Text>
-                </TouchableOpacity>
-              ))}
+              {Object.entries(MOOD_MAP).map(([key, data]) => {
+                const isActive = mood === key;
+                return (
+                  <TouchableOpacity 
+                    key={key} 
+                    style={styles.moodOptionItem}
+                    onPress={() => handleMoodSelect(key)}
+                  >
+                    <Feather 
+                      name={data.icon} 
+                      size={32} 
+                      color={isActive ? data.color : '#C4C4C4'} 
+                      style={{marginBottom: 8}} 
+                    />
+                    <Text 
+                      style={[
+                        styles.moodOptionLabel, 
+                        { color: isActive ? data.color : '#999999', fontWeight: isActive ? '600' : '400' }
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {data.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           </TouchableOpacity>
         </TouchableOpacity>
@@ -514,19 +527,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   moodOptionItem: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: 'transparent',
-    width: '23%',
+    paddingVertical: 12,
   },
   moodOptionLabel: {
-    fontSize: 12,
-    fontWeight: '500',
+    fontSize: 13,
     color: colors.text.secondary,
+    textAlign: 'center',
   },
   pageTitle: {
     fontWeight: '700',

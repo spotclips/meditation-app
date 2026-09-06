@@ -76,6 +76,9 @@ export class SessionManager {
     this.config.backgroundSoundId = soundId;
     const sound = getBackgroundSound(soundId);
     
+    // Reset the meditation session timer back to zero when a new track is selected
+    this.meditationEngine.reset();
+    
     if (sound && sound.audioAsset) {
       await this.loadBackgroundSound(soundId);
       // If session is already playing, play the new background sound immediately

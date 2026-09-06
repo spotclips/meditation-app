@@ -124,6 +124,21 @@ export class MeditationEngine {
     else this.emitState();
   }
   
+  public reset() {
+    this.state.elapsedSeconds = 0;
+    this.state.remainingSeconds = this.state.totalDurationSeconds;
+    this.state.progress = 0;
+    
+    if (this.timeline.length > 0 && this.timeline[0].startTime === 0) {
+      this.triggerStep(this.timeline[0].step);
+    } else {
+      this.state.currentStepId = null;
+      this.state.currentText = null;
+    }
+    
+    this.emitState();
+  }
+  
   public destroy() {
     this.stopTicker();
     this.listeners.clear();

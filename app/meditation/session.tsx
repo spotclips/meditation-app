@@ -8,6 +8,7 @@ import {
   Easing as RNEasing,
   Modal,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -205,6 +206,7 @@ export default function SessionScreen() {
   const {
     sessionState,
     breathingState,
+    audioState,
     togglePlayPause,
     endSession,
     changeBackgroundSound,
@@ -408,7 +410,10 @@ export default function SessionScreen() {
                     {sound.name}
                   </Text>
                 </View>
-                {isSelected && (
+                {isSelected && audioState.backgroundStatus === 'loading' && (
+                  <ActivityIndicator size="small" color={COLORS.green} style={{ marginLeft: 8 }} />
+                )}
+                {isSelected && audioState.backgroundStatus !== 'loading' && (
                   <MiniPlayingIndicator isPlaying={!isPaused} />
                 )}
               </TouchableOpacity>

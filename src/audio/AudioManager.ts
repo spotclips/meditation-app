@@ -57,15 +57,23 @@ export class AudioManager {
     } else {
       this.bgPlayer = createAudioPlayer(source, { updateInterval: 500 });
       this.bgPlayer.loop = true;
+      this.bgPlayer.addListener('playbackStatusUpdate', (status: AudioStatus) => {
+        if (!status.isLoaded || status.isBuffering) {
+          if (this.state.backgroundStatus !== 'loading') {
+            this.state.backgroundStatus = 'loading';
+            this.emitState();
+          }
+        } else if (status.playing) {
+          if (this.state.backgroundStatus !== 'playing') {
+            this.state.backgroundStatus = 'playing';
+            this.emitState();
+          }
+        }
+      });
     }
     this.bgPlayer.volume = defaultVolume;
     
     this.state.backgroundStatus = 'loading';
-    this.emitState();
-    
-    // We can't await load asynchronously directly in expo-audio v57 like expo-av,
-    // it loads automatically.
-    this.state.backgroundStatus = 'idle';
     this.emitState();
   }
   

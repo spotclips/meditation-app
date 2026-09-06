@@ -7,8 +7,10 @@ import { SessionManager } from '../engine/SessionManager';
 import { getMeditation } from '../content/meditations';
 import type { SessionConfiguration, SessionState } from '../types/session';
 import type { BreathingState } from '../types/breathing';
+import type { AudioState } from '../types/audio';
 import { INITIAL_SESSION_STATE } from '../types/session';
 import { INITIAL_BREATHING_STATE } from '../types/breathing';
+import { INITIAL_AUDIO_STATE } from '../types/audio';
 
 export function useMeditationSession(
   meditationId: string, 
@@ -16,6 +18,7 @@ export function useMeditationSession(
 ) {
   const [sessionState, setSessionState] = useState<SessionState>(INITIAL_SESSION_STATE);
   const [breathingState, setBreathingState] = useState<BreathingState>(INITIAL_BREATHING_STATE);
+  const [audioState, setAudioState] = useState<AudioState>(INITIAL_AUDIO_STATE);
   
   const managerRef = useRef<SessionManager | null>(null);
   const isInitialized = useRef(false);
@@ -65,6 +68,10 @@ export function useMeditationSession(
         }
       });
     }
+
+    const unsubAudio = manager.audioManager.addEventListener((state) => {
+      setAudioState(state);
+    });
     
     manager.prepare().then(() => {
       // Auto-start could go here, or let UI handle it
@@ -73,6 +80,7 @@ export function useMeditationSession(
     return () => {
       unsubMeditation();
       if (unsubBreathing) unsubBreathing();
+      unsubAudio();
       manager.destroy();
       isInitialized.current = false;
     };
@@ -107,6 +115,7 @@ export function useMeditationSession(
   return {
     sessionState,
     breathingState,
+    audioState,
     togglePlayPause,
     endSession,
     changeBackgroundSound,

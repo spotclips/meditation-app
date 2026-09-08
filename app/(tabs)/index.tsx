@@ -203,8 +203,6 @@ export default function MyPlanScreen() {
     const cardBg = getCategoryCardColor(category.id);
     const isDarkBg = category.id === 'sleep' || category.id === 'stress-relief' || category.id === 'relaxation' || category.id === 'spiritual';
     const textColor = isDarkBg ? colors.text.inverse : colors.text.primary;
-    const playBtnBg = isDarkBg ? '#FFFFFF' : '#343B57';
-    const playIconColor = isDarkBg ? colors.text.primary : '#FFFFFF';
     const iconName = getCategoryIconName(category.id);
 
     return (
@@ -236,8 +234,8 @@ export default function MyPlanScreen() {
         <View style={styles.topCardContent}>
           <Text style={[styles.topCardTitle, { color: textColor }]}>{formattedTitle}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
-            <View style={[styles.playButtonSmall, { backgroundColor: playBtnBg }]}>
-              <FontAwesome name="play" size={14} color={playIconColor} style={styles.playIconSmall} />
+            <View style={styles.playButtonSmall}>
+              <FontAwesome name="play" size={14} color={cardBg === '#FFFFFF' ? '#F3C583' : cardBg} style={styles.playIconSmall} />
             </View>
             <View style={[styles.durationRow, { marginLeft: 12 }]}>
               <Feather name="clock" size={14} color={textColor} />
@@ -383,8 +381,8 @@ export default function MyPlanScreen() {
                         {trackCount} {t('playlistTracks')}
                       </Text>
                     </View>
-                    <View style={[styles.playButtonSmall, { backgroundColor: '#343B57' }]}>
-                      <FontAwesome name="play" size={14} color="#FFFFFF" style={styles.playIconSmall} />
+                    <View style={styles.playButtonSmall}>
+                      <FontAwesome name="play" size={14} color={cardBg === '#FFFFFF' ? '#F3C583' : cardBg} style={styles.playIconSmall} />
                     </View>
                   </View>
                 </View>

@@ -368,11 +368,18 @@ export default function MyPlanScreen() {
                   />
                 )}
 
-                <View style={[styles.cardFooterLight, { backgroundColor: 'transparent', borderTopRightRadius: 0 }]}>
+                <View style={[styles.cardFooterLight, { borderTopLeftRadius: 0 }]}>
+                  {/* Inverted Corner Mask for Top-Left */}
+                  <View style={[styles.invertedCornerContainer, { backgroundColor: 'transparent' }]}>
+                    <Svg width={24} height={24} viewBox="0 0 24 24">
+                      <Path d="M 0 24 L 24 24 A 24 24 0 0 1 0 0 Z" fill="#FFFFFF" />
+                    </Svg>
+                  </View>
+
                   <View style={[styles.footerRow, { alignItems: 'center' }]}>
                     <View style={{ flex: 1 }}>
-                      <Text style={[styles.cardTitleDark, { color: '#FFFFFF' }]}>{cat.label}</Text>
-                      <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', marginTop: 2, fontWeight: '500' }}>
+                      <Text style={styles.cardTitleDark}>{cat.label}</Text>
+                      <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', marginTop: 2, fontWeight: '500' }}>
                         {trackCount} {t('playlistTracks')}
                       </Text>
                     </View>
@@ -708,7 +715,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'transparent',
+    backgroundColor: '#FFFFFF',
+    borderTopRightRadius: 32,
     padding: spacing.xl,
     paddingBottom: spacing.xl + 4,
     zIndex: 3,
@@ -719,7 +727,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: 24,
     height: 24,
-    backgroundColor: '#F8F9FE',
+    backgroundColor: '#FFFFFF',
   },
   invertedCornerMask: {
     flex: 1,

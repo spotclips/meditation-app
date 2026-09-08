@@ -30,18 +30,18 @@ const categories = [
 
 function getCategoryCardColor(id: string) {
   const map: Record<string, string> = {
-    'calm': '#82C3D1',
-    'stress-relief': '#8993E8',
-    'sleep': colors.bg.darkCard,
-    'focus': '#FBC576',
-    'mindfulness': '#EFA48B',
-    'relaxation': '#B69DD2',
-    'breathing': '#99D0A8',
-    'yoga': '#FFFFFF',
-    'spiritual': '#252D47',
-    'peaceful': '#B79BD0',
-    'spa': '#E5B1CF',
-    'soft': '#99CFA2',
+    'calm': '#00A896',          // Rich Teal
+    'stress-relief': '#705DFA', // Vibrant Purple
+    'sleep': '#2B2D42',         // Deep Navy
+    'focus': '#FF9F1C',         // Vibrant Orange
+    'mindfulness': '#FF5A5F',   // Rich Coral
+    'relaxation': '#8E44AD',    // Deep Violet
+    'breathing': '#2EC4B6',     // Bright Turquoise
+    'yoga': '#E74C3C',          // Vibrant Red
+    'spiritual': '#34495E',     // Deep Slate
+    'peaceful': '#45B39D',      // Emerald
+    'spa': '#D291BC',           // Rich Mauve
+    'soft': '#81B29A',          // Sage Green
   };
   return map[id] || colors.bg.surface;
 }
@@ -201,10 +201,10 @@ export default function MyPlanScreen() {
     const formattedTitle = titleLines.length > 1 ? `${titleLines[0]}\n${titleLines.slice(1).join(' ')}` : titleLines[0];
 
     const cardBg = getCategoryCardColor(category.id);
-    const isDarkBg = category.id === 'sleep' || category.id === 'stress-relief' || category.id === 'relaxation' || category.id === 'spiritual';
+    const isDarkBg = true; // All vibrant colors need stark white text for contrast
     const textColor = isDarkBg ? colors.text.inverse : colors.text.primary;
-    const playBtnBg = isDarkBg ? '#FFFFFF' : '#343B57'; // High contrast button
-    const playIconColor = isDarkBg ? colors.text.primary : '#FFFFFF';
+    const playBtnBg = '#FFFFFF';
+    const playIconColor = cardBg === '#FFFFFF' ? '#F3C583' : cardBg;
     const iconName = getCategoryIconName(category.id);
 
     return (
@@ -323,7 +323,7 @@ export default function MyPlanScreen() {
           {categories.map((cat, index) => {
             const cardBg = getCategoryCardColor(cat.id);
             const iconName = getCategoryIconName(cat.id);
-            const isDarkBg = cat.id === 'sleep' || cat.id === 'stress-relief' || cat.id === 'relaxation' || cat.id === 'spiritual';
+            const isDarkBg = true; // All vibrant cards need white icons for contrast
             const trackCount = getSelectableSounds(cat.id).length;
             const isFav = favouriteIds.includes(cat.id);
 
@@ -383,8 +383,8 @@ export default function MyPlanScreen() {
                         {trackCount} {t('playlistTracks')}
                       </Text>
                     </View>
-                    <View style={[styles.playButtonSmall, { backgroundColor: '#343B57' }]}>
-                      <FontAwesome name="play" size={14} color="#FFFFFF" style={styles.playIconSmall} />
+                    <View style={styles.playButtonSmall}>
+                      <FontAwesome name="play" size={14} color={cardBg === '#FFFFFF' ? '#F3C583' : cardBg} style={styles.playIconSmall} />
                     </View>
                   </View>
                 </View>
